@@ -26,7 +26,7 @@ The system is designed for secure communication using XOR-based encryption and B
 
 - **Arduino IDE** (or PlatformIO)
 - **RadioLib v6.6.0** (required for LoRa communication)
-  - **Note:** Ensure you are using **RadioLib v6.6.0** specifically, as earlier versions may not handle packet transmission reliably.
+  - **Note:** Ensure you are using **RadioLib v6.6.0** specifically, newer versions may work, but the latest needs some refactoring.
 - **mbedTLS** (for Base64 encoding/decoding)
 
 ## Installation
