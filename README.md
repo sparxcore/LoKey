@@ -2,25 +2,27 @@
 
 ## Overview
 
-This project implements a **LoKey** and **LoLock** system using Arduino-based hardware. The system facilitates wireless communication between **LoKey** (a handheld control unit) and **LoLock** (a locking mechanism). **LoKey** sends encrypted commands to **LoLock** over LoRa, instructing it to perform actions such as locking, unlocking, or resetting a servo mechanism.
+This project implements a **LoKey** and **LoLock** system using ESP32 / LoRa hardware. The system facilitates wireless communication between **LoKey** (a handheld control unit) and **LoLock** (a locking mechanism). **LoKey** sends encrypted commands to **LoLock** over LoRa, instructing it to perform actions such as locking, unlocking, or resetting a servo mechanism.
 
-The system is designed for secure communication using XOR-based encryption and Base64 encoding. It requires **RadioLib v6.6.0** to ensure reliable LoRa communication.
+The system is designed with some-what secure communication using XOR-based encryption with a Random key, and Base64 encoding. 
+It requires **RadioLib v6.6.0**.
 
 ## Features
 
-- **Wireless Communication:** LoKey and LoLock communicate wirelessly using LoRa at 868.3 MHz.
-- **Encrypted Communication:** Commands are encrypted with a 16-byte key and Base64 encoded to ensure secure communication.
+- **Wireless Communication:** LoKey and LoLock communicate wirelessly using LoRa.
+- **Encrypted Communication:** Commands are XOR encrypted with a 16-byte key and Base64 encoded.
 - **Servo Control:** LoLock controls a servo mechanism to lock and unlock based on commands received from LoKey.
 - **Heartbeat Mechanism:** LoLock sends periodic heartbeat signals to LoKey to maintain communication integrity.
 - **Reset Functionality:** LoKey can reset LoLock to return the servo to its initial position.
-- **Acknowledgment System:** Both devices acknowledge the successful reception and execution of commands.
+- **Packet Acknowledgment and feedback:** Both devices acknowledge the successful reception and execution of commands LoKey uses LEDs to show status.
 
 ## Hardware Requirements
 
-- **Heltec WiFi LoRa 32 (V3)**
+- **Heltec Wireless Stick (V3)**
 - **ESP32Servo Library** (for servo control on LoLock)
 - **LoRa SX1262 Module** (used by both LoKey and LoLock)
-- **Servo Motor** (controlled by LoLock for locking and unlocking actions)
+- **9g Servo** (controlled by LoLock for locking and unlocking actions)
+- **4 LED backlit Switches** (to use as input control for LoKey
 
 ## Software Requirements
 
@@ -46,7 +48,7 @@ The system is designed for secure communication using XOR-based encryption and B
   arduino-cli lib install "ESP32Servo"
   ```
 
-- **mbedTLS Library:** This is included with the ESP32 core libraries by default.
+- **mbedTLS Library:** Included with the ESP32 core libraries by default.
 
 ### 2. Flashing the LoKey and LoLock
 
@@ -71,24 +73,14 @@ Ensure you upload the correct code to the appropriate device.
   Upon startup, **LoKey** sends a pairing request to **LoLock**. Once paired, both devices transition to an **IDLE** state.
 
 - **Reset Command:**
-  **LoKey** can send a reset command to **LoLock**, which moves the servo back to the initial position and sends an acknowledgment to **LoKey**.
+  BUTTON 1 o **LoKey** held for 5 second will send a reset command to **LoLock**, which moves the servo back to the initial position and sends an acknowledgment to **LoKey**.
 
 - **Locking/Unlocking:**
-  **LoKey** sends commands to move the servo on **LoLock** to lock or unlock positions, with each action being acknowledged.
+  **LoKey** sends commands to move the servo on **LoLock** to lock or unlock positions, with each action being acknowledged. (Button 4 to 1)
 
 - **Heartbeat:**
-  **LoLock** periodically sends a heartbeat message to **LoKey** to ensure the connection is active. If no heartbeat is received, **LoKey** can trigger a reset.
+  **LoLock** periodically sends a heartbeat message to **LoKey** to ensure the connection is active. If no heartbeat is received and all 4 LEDs are flashed. **LoKey** can trigger a reset.
 
-### Example Workflow:
-
-1. Power on both **LoKey** and **LoLock**.
-2. **LoKey** sends a pairing request, and once paired, the devices transition to **IDLE**.
-3. **LoKey** can send a command to lock or unlock **LoLock**, which moves the servo and sends back an acknowledgment.
-4. The system continues exchanging commands and acknowledgments for various actions, ensuring secure and reliable communication.
-
-### Key Commands:
-- `reset`: Resets **LoLock** and moves the servo to its initial position.
-- `servo[1-4]`: Commands **LoLock** to move its servo to different positions.
 
 ## Troubleshooting
 
@@ -99,7 +91,7 @@ Ensure you upload the correct code to the appropriate device.
   - **Solution:** Make sure **LoKey** switches back to **receive** mode after sending a command.
 
 - **Issue:** Servo is not moving to the expected position.
-  - **Solution:** Check the wiring of the servo and ensure the correct GPIO pin is defined in the code.
+  - **Solution:** Check the wiring of the servo and ensure the correct servoPositions are set for your use.
 
 ## Acknowledgments
 
