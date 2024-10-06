@@ -420,8 +420,8 @@ void encryptMessage(const char* message, char* output, size_t outputSize) {
   output[actualEncodedLength] = '\0'; // Null-terminate
 
   // Debug: Print Base64 encoded message
-  //Serial.print("Encrypted Message (Base64): ");
-  //Serial.println(output);
+  Serial.print("Encrypted Message (Base64): ");
+  Serial.println(output);
 }
 
 void decryptMessage(const char* message, size_t messageLength, char* output, size_t outputSize) {
@@ -444,11 +444,11 @@ void decryptMessage(const char* message, size_t messageLength, char* output, siz
   }
 
   // Debug: Print encrypted bytes after Base64 decoding
-  //Serial.print("Encrypted Bytes After Base64 Decoding: ");
-  //for (size_t i = 0; i < actualDecodedLength; i++) {
-  //  Serial.printf("%02x ", encryptedBytes[i]);
-  //}
-  //Serial.println();
+  Serial.print("Encrypted Bytes After Base64 Decoding: ");
+  for (size_t i = 0; i < actualDecodedLength; i++) {
+    Serial.printf("%02x ", encryptedBytes[i]);
+  }
+  Serial.println();
 
   if (actualDecodedLength + 1 > outputSize) { // +1 for null terminator
     Serial.println("Output buffer too small for decoded message");
