@@ -23,6 +23,8 @@ It requires **RadioLib v6.6.0**.
 - **LoRa SX1262 Module** (used by both LoKey and LoLock)
 - **9g Servo** (controlled by LoLock for locking and unlocking actions)
 - **4 LED backlit Switches** (to use as input control for LoKey
+- **LoKey Controller Model** https://www.printables.com/model/1031026-lokey-controller
+- **LoLock Drone Mount** https://www.printables.com/model/1031020-lolock-dji-fpv
 
 ## Software Requirements
 
