@@ -95,10 +95,13 @@ Ensure you upload the correct code to the appropriate device.
 - **Issue:** Servo is not moving to the expected position.
   - **Solution:** Check the wiring of the servo and ensure the correct servoPositions are set for your use.
  
+- **PR's** Only accepted if started with "No idiot, you do it like this..."
+ 
 ## TO-DO
 
 - There some odd timing in packets transmitting on the LoLock code which rely on the Debug print statments to be in the code.... nothing im looking to fix anytime soon....
 - I used code from another project on the LoKey controller, which used the heltec_unoffical library... This needs refactoring for the RadioLib library to put it in line with the LoLock device...
+- **sometimes** during locking of position 1, for some reason LoKey controller seems to thing the button is being held for the reset command, which then fully unlocks the LoLock unit. which is stupid.
 
 ## Acknowledgments
 
